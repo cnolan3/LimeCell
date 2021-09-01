@@ -1,6 +1,33 @@
+/**
+ * page.cpp
+ * 
+ * Author: Connor Nolan
+ */
 #include "page.h"
 
 #include <algorithm>
+
+/**
+ * NOTE: many of the function comments below mention "currently use rows"
+ * or "currently used columns", a "currently used row" is a row of cells that
+ * has at least one FILLED cell currently inside it, a row that has only empty
+ * cells is not considered a "used" row.
+ * 
+ * ex.
+ *       | col 1 | col 2 | col 3 |
+ * -------------------------------
+ * row 1 | "A"   |       |       |
+ * -------------------------------
+ * row 2 |       |       |       |
+ * -------------------------------
+ * row 3 | "C"   |       | "B"   |
+ * -------------------------------
+ * row 4 |       |       |       |
+ * -------------------------------
+ * 
+ * rows 1 and 3 are considered "currently used" while rows 2 and 4 are not,
+ * likewise, column 2 is not currently used.
+ */
 
 // construct a page
 page::page()
@@ -63,21 +90,28 @@ page::statusCode page::setDataAt(int col, int row, std::string data)
     {
         if (data == "")
         {
+            // remove the cell from the sheet
             m_pageData.erase(found);
 
+            // decrement the number of cells in
+            // this column and row
             removeCol(col);
             removeRow(row);
 
             return statusCode::CELL_DATA_DELETED;
         }
 
+        // replace the data in the cell
         (*found).second = data;
 
         return statusCode::CELL_DATA_REPLACED;
     }
 
+    // add the new cell to the sheet
     m_pageData[tmp] = data;
 
+    // increment the number of cells in
+    // this column and row
     addCol(col);
     addRow(row);
 
@@ -95,6 +129,8 @@ int page::getMaxCol()
 {
     if (m_cols.size() > 0)
     {
+        // the max col is the last entry into m_cols
+        // since it is a sorted set.
         return (*(m_cols.rbegin())).position;
     }
 
@@ -112,6 +148,8 @@ int page::getMaxRow()
 {
     if (m_rows.size() > 0)
     {
+        // the max row is the last entry into m_rows
+        // since it is a sorted set.
         return (*(m_rows.rbegin())).position;
     }
 

@@ -27,6 +27,8 @@ struct cell
 
 /**
  * hash function for cells
+ * 
+ * uses the cell column number and row number to create the hash.
  */
 struct cellHash
 {
@@ -37,16 +39,16 @@ struct cellHash
 };
 
 /**
- * map linking cells to their data
+ * hash table linking cells to their data
  */
 typedef std::unordered_map<cell, std::string, cellHash> sheet;
 
 /**
- * structure representing the positions of cells along one axis
+ * structure representing the quantity of cells along one axis
  */
 struct maxPos
 {
-    int position;
+    int position; // row or column number
     int* quantity;
 
     maxPos(int position) { this->position = position; this->quantity = new int(1); }
