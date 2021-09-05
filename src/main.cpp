@@ -1,47 +1,39 @@
 #include <iostream>
 #include <ncurses.h>
-#include <set>
-#include <string>
-#include "page.h"
+
+#include "Page.h"
+#include "FileOps.h"
 
 int main(int argc, char *argv[])
 {
-    page p;
+    if (argc < 3)
+    {
+        std::cout << "Enter the path to input and output files." << std::endl;
+        exit(1);
+    }
 
-    p.setDataAt(0, 0, "first");
+    std::string inFilePath = argv[1];
+    std::string outFilePath = argv[2];
 
-    p.print(std::cout);
-    std::cout << std::endl;
+    limecell::data::Page p;
 
-    p.setDataAt(1, 1, "second");
+    if (limecell::fileops::readFile(p, inFilePath) == limecell::fileops::SUCCESS)
+    {
+        p.print(std::cout);
+    }
+    else
+    {
+        std::cout << "Failed to read file." << std::endl;
 
-    p.print(std::cout);
-    std::cout << std::endl;
+        exit(1);
+    }
 
-    p.setDataAt(1, 1, "third");
+    if (limecell::fileops::writeFile(p, outFilePath) != limecell::fileops::SUCCESS)
+    {
+        std::cout << "Failed to write to file." << std::endl;
 
-    p.print(std::cout);
-    std::cout << std::endl;
-
-    p.setDataAt(2, 0, "fourth");
-
-    p.print(std::cout);
-    std::cout << std::endl;
-
-    p.setDataAt(1, 1, "");
-
-    p.print(std::cout);
-    std::cout << std::endl;
-
-    p.setDataAt(0, 0, "");
-
-    p.print(std::cout);
-    std::cout << std::endl;
-
-    p.setDataAt(4, 5, "fifth");
-
-    p.print(std::cout);
-    std::cout << std::endl;
+        exit(1);
+    }
 
     return 0;
 }

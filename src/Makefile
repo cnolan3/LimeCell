@@ -2,7 +2,10 @@ SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
 PROG = limecell
 
-LDFLAGS = -g
+BOOST_ROOT := /usr/include/boost
+BOOST_REGEX := boost_regex
+
+LDFLAGS = -L${BOOST_ROOT} -l${BOOST_REGEX}
 CFLAGS = -g
 
 all: $(PROG)
