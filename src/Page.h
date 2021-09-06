@@ -96,7 +96,7 @@ namespace limecell
              * @param data reference to data string
              * @return status code
              */
-            statusCode setDataAt(int col, int row, std::string data);
+            statusCode getDataAt(int col, int row, std::string& data); 
 
             /*! \brief set the data at a specified cell location.
              * 
@@ -116,7 +116,7 @@ namespace limecell
              * @param data cell input data
              * @return status code
              */
-            statusCode getDataAt(int col, int row, std::string& data);
+            statusCode setDataAt(int col, int row, std::string data); 
 
             /*! \brief gets the current highest column number used in the page.
              * 
