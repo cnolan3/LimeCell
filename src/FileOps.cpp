@@ -1,3 +1,8 @@
+/*!
+ * @file FileOps.cpp 
+ * 
+ * @author Connor Nolan
+ */
 #include "FileOps.h"
 
 #include <boost/regex.hpp>
@@ -6,17 +11,10 @@ namespace limecell
 {
     namespace fileops
     {
-        /**
-         * read csv file contents into a page object
-         * 
-         * @param page page to store data
-         * @param filePath path to input file
-         * @return a fileops status code
-         */
-        statusCode readFile(data::Page& page, std::string filePath)
+        statusCode readFile(data::Page& page, std::string filePath, std::string delim)
         {
             // modified from https://bravenewmethod.com/2016/09/17/quick-and-robust-c-csv-reader-with-boost/
-            const boost::regex fieldsRegex(",");
+            const boost::regex fieldsRegex(delim);
 
             std::ifstream inFile(filePath);
 
@@ -48,14 +46,7 @@ namespace limecell
             return statusCode::SUCCESS;
         }
 
-        /**
-         * write a page object to a file
-         * 
-         * @param page page data to write
-         * @param filePath path to output file
-         * @return a fileops status code
-         */
-        statusCode writeFile(data::Page& page, std::string filePath)
+        statusCode writeFile(data::Page& page, std::string filePath, std::string delim)
         {
             std::ofstream outFile(filePath, std::ostream::trunc);
 
@@ -71,7 +62,7 @@ namespace limecell
                 {
                     std::string field;
                     page.getDataAt(col, row, field);
-                    line = line + field + ",";
+                    line = line + field + delim;
                 }
 
                 outFile << line << std::endl;

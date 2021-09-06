@@ -1,14 +1,14 @@
 /**
- * page.cpp
+ * @file Page.cpp
  * 
- * Author: Connor Nolan
+ * @author Connor Nolan
  */
 #include "Page.h"
 
 #include <algorithm>
 
 /**
- * NOTE: many of the function comments below mention "currently use rows"
+ * NOTE: many of the function comments in the header file mention "currently use rows"
  * or "currently used columns", a "currently used row" is a row of cells that
  * has at least one FILLED cell currently inside it, a row that has only empty
  * cells is not considered a "used" row.
@@ -33,24 +33,11 @@ namespace limecell
 {
     namespace data
     {
-        // construct a page
         Page::Page()
         {
 
         }
 
-        /**
-         * get data at a specified cell location.
-         * 
-         * returns status code FOUND if the cell is found and the data reference
-         * is set, returns status NOT_FOUND if the cell is not found, and data
-         * reference is set to "". runs in constant time, O(1).
-         * 
-         * @param col cell column number
-         * @param row cell row number
-         * @param data reference to data string
-         * @return status code
-         */
         Page::statusCode Page::getDataAt(int col, int row, std::string& data)
         {
             auto found = m_pageData.find(cell(col, row));
@@ -65,25 +52,6 @@ namespace limecell
             return statusCode::NOT_FOUND;
         }
 
-        /**
-         * set the data at a specified cell location.
-         * 
-         * returns status code CELL_DATA_DELETED and deletes the cell entry if
-         * the cell if found and the input data is set to "".
-         * returns status code CELL_DATA_REPLACED if the cell is found, the
-         * existing data is replaced with the input data.
-         * returns status code CELL_DATA_ADDED if the cell was not found, a new
-         * cell is created with the input data.
-         * runs in constant time, O(1) if data is replaced. if data is added or
-         * deleted, runs in logarithmic time, O(logn) + O(logm), where n is the
-         * number of currently used rows and m is the number of currently used
-         * columns.
-         * 
-         * @param col cell column number
-         * @param row cell row number
-         * @param data cell input data
-         * @return status code
-         */
         Page::statusCode Page::setDataAt(int col, int row, std::string data)
         {
             cell tmp(col, row);
@@ -122,13 +90,6 @@ namespace limecell
             return statusCode::CELL_DATA_ADDED;
         }
 
-        /**
-         * gets the current highest column number used in the page.
-         * 
-         * constant time, O(n).
-         * 
-         * @return highest col number
-         */
         int Page::getMaxCol()
         {
             if (m_cols.size() > 0)
@@ -141,13 +102,6 @@ namespace limecell
             return -1;
         }
 
-        /**
-         * gets the current highest row number used in the page
-         * 
-         * constant time O(n).
-         * 
-         * @return highest row number
-         */
         int Page::getMaxRow()
         {
             if (m_rows.size() > 0)
@@ -160,11 +114,6 @@ namespace limecell
             return -1;
         }
 
-        /**
-         * print the page to the stream (only for debug purposes)
-         * 
-         * @param stream stream to print to
-         */
         void Page::print(std::ostream& stream)
         {
             for (int i = 0; i <= getMaxRow(); i++)
@@ -184,17 +133,6 @@ namespace limecell
             }
         }
 
-        /**
-         * decrements quantity of cells in a row.
-         * 
-         * if the row has any cells in it, the quantity value is decremented.
-         * if, after being decremented, the quantity is zero, the maxPos entry
-         * for the row is deleted. runs in logarithmic time, O(logn), where n
-         * is the number of existing maxPos entries (aka, the number of currently
-         * used rows).
-         * 
-         * @param row row number
-         */
         void Page::removeRow(int row)
         {
             auto found = m_rows.find(maxPos(row));
@@ -210,16 +148,6 @@ namespace limecell
             }
         }
 
-        /**
-         * increment the quantity of cells in a row.
-         * 
-         * if the row has any cells in it, the quantity value is incremented.
-         * otherwise, a maxPos entry is created for this row. runs in logarithmic
-         * time, O(logn), where n is the number of existing maxPos entries (aka,
-         * the number of currently used rows).
-         * 
-         * @param row row number
-         */
         void Page::addRow(int row)
         {
             maxPos tmp(row);
@@ -236,17 +164,6 @@ namespace limecell
             }
         }
 
-        /**
-         * decrements quantity of cells in a column.
-         * 
-         * if the column has any cells in it, the quantity value is decremented.
-         * if, after being decremented, the quantity is zero, the maxPos entry
-         * for the column is deleted. runs in logarithmic time, O(logn), where n
-         * is the number of existing maxPos entries (aka, the number of currently
-         * used columns).
-         * 
-         * @param col column number
-         */
         void Page::removeCol(int col)
         {
             auto found = m_cols.find(maxPos(col));
@@ -262,16 +179,6 @@ namespace limecell
             }
         }
 
-        /**
-         * increment the quantity of cells in a column.
-         * 
-         * if the column has any cells in it, the quantity value is incremented.
-         * otherwise, a maxPos entry is created for this column. runs in logarithmic
-         * time, O(logn), where n is the number of existing maxPos entries (aka,
-         * the number of currently used columns).
-         * 
-         * @param col column number
-         */
         void Page::addCol(int col)
         {
             maxPos tmp(col);
