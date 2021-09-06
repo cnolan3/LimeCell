@@ -34,5 +34,6 @@
 *.vscode
 html/
 latex/
+bin/
 limecell
 unit_test
