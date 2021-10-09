@@ -79,15 +79,21 @@ namespace limecell
                 return statusCode::CELL_DATA_REPLACED;
             }
 
-            // add the new cell to the sheet
-            m_pageData[tmp] = data;
+            // if input data is not empty, create new cell
+            if (data != "")
+            {
+                // add the new cell to the sheet
+                m_pageData[tmp] = data;
 
-            // increment the number of cells in
-            // this column and row
-            addCol(col);
-            addRow(row);
+                // increment the number of cells in
+                // this column and row
+                addCol(col);
+                addRow(row);
 
-            return statusCode::CELL_DATA_ADDED;
+                return statusCode::CELL_DATA_ADDED;
+            }
+
+            return statusCode::CELL_EMPTY;
         }
 
         int Page::getMaxCol()
@@ -112,25 +118,6 @@ namespace limecell
             }
 
             return -1;
-        }
-
-        void Page::print(std::ostream& stream)
-        {
-            for (int i = 0; i <= getMaxRow(); i++)
-            {
-                for (int j = 0; j <= getMaxCol(); j++)
-                {
-                    std::string data;
-                    if (getDataAt(j, i, data) == statusCode::NOT_FOUND)
-                    {
-                        data = "EMPTY";
-                    }
-
-                    stream << data << ", ";
-                }
-
-                stream << std::endl;
-            }
         }
 
         void Page::removeRow(int row)
@@ -192,6 +179,42 @@ namespace limecell
             else
             {
                 m_cols.insert(tmp);
+            }
+        }
+
+        Page* Page::subPage(int startCol, int startRow, int numCols, int numRows)
+        {
+            Page* ret = new Page;
+
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int col = 0; col < numCols; col++)
+                {
+                    std::string data;
+                    this->getDataAt(col + startCol, row + startRow, data);
+                    ret->setDataAt(col, row, data);
+                }
+            }
+
+            return ret;
+        }
+
+        void TestPage::print(std::ostream& stream)
+        {
+            for (int i = 0; i <= getMaxRow(); i++)
+            {
+                for (int j = 0; j <= getMaxCol(); j++)
+                {
+                    std::string data;
+                    if (getDataAt(j, i, data) == statusCode::NOT_FOUND)
+                    {
+                        data = "EMPTY";
+                    }
+
+                    stream << data << ", ";
+                }
+
+                stream << std::endl;
             }
         }
     };

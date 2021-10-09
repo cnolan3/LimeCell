@@ -104,8 +104,10 @@ namespace limecell
              * the cell if found and the input data is set to "".
              * returns status code CELL_DATA_REPLACED if the cell is found, the
              * existing data is replaced with the input data.
-             * returns status code CELL_DATA_ADDED if the cell was not found, a new
-             * cell is created with the input data.
+             * returns status code CELL_DATA_ADDED if the cell was not found and
+             * the input data is not empty, a new cell is created with the input data.
+             * returns status code CELL_EMPTY if the cell was not found and the
+             * input data is empty, cell is not created.
              * runs in constant time, O(1) if data is replaced. if data is added or
              * deleted, runs in logarithmic time, O(logn) + O(logm), where n is the
              * number of currently used rows and m is the number of currently used
@@ -134,11 +136,15 @@ namespace limecell
              */
             int getMaxRow();
 
-            /*! \brief print the page to the stream (only for debug purposes)
-             * 
-             * @param stream stream to print to
+            /*! \brief return a new page containing a subset of this page
+             *
+             * @param startCol column to start subset from
+             * @param startRow row to start subset from
+             * @param numCols number of columns to include
+             * @param numRows number of rows to include
+             * @return sub page
              */
-            void print(std::ostream& stream);
+            Page* subPage(int startCol, int startRow, int numCols, int numRows);
 
         private: 
 
@@ -195,6 +201,22 @@ namespace limecell
             posList m_cols;
             //! list of used rows
             posList m_rows;
+        };
+
+        class TestPage : Page
+        {
+        public:
+            TestPage();
+            ~TestPage() = default;
+
+            /*! \brief print the page to the stream (only for debug purposes)
+             * 
+             * @param stream stream to print to
+             */
+            void print(std::ostream& stream);
+
+        private:
+
         };
     };
 };

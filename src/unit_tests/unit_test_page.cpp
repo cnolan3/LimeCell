@@ -4,8 +4,6 @@
  * 
  * @author Connor Nolan
  */
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE "PageTest"
 #include <boost/test/unit_test.hpp>
 
 #include "../Page.h"
@@ -254,4 +252,43 @@ BOOST_AUTO_TEST_CASE(get_max_row_col_middle_then_end_delete)
 
     BOOST_CHECK(maxRow == 1);
     BOOST_CHECK(maxCol == 1);
+}
+
+BOOST_AUTO_TEST_CASE(set_empty_cell_with_empty_data)
+{
+    data::Page p;
+
+    data::Page::statusCode status;
+
+    status = p.setDataAt(0, 0, "");
+
+    BOOST_CHECK(status == data::Page::statusCode::CELL_EMPTY);
+}
+
+BOOST_AUTO_TEST_CASE(get_subset)
+{
+    data::Page p1;
+    
+    p1.setDataAt(0, 0, "first");
+    p1.setDataAt(1, 1, "second");
+    p1.setDataAt(3, 1, "third");
+    p1.setDataAt(4, 4, "fourth");
+
+    data::Page* p2 = p1.subPage(1, 1, 3, 3);
+
+    std::string data;
+    p2->getDataAt(0, 0, data);
+    BOOST_CHECK(data == "second");
+
+    p2->getDataAt(1, 1, data);
+    BOOST_CHECK(data == "");
+
+    p2->getDataAt(2, 0, data);
+    BOOST_CHECK(data == "third");
+
+    p2->getDataAt(3, 3, data);
+    BOOST_CHECK(data == "");
+
+    p2->getDataAt(4, 4, data);
+    BOOST_CHECK(data == "");
 }
