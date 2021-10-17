@@ -3,6 +3,7 @@
 
 #include "Page.h"
 #include "FileOps.h"
+#include "Utils.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,11 +16,11 @@ int main(int argc, char *argv[])
     std::string inFilePath = argv[1];
     std::string outFilePath = argv[2];
 
-    limecell::data::Page p;
+    limecell::data::Page* p = new limecell::data::Page();
 
     if (limecell::fileops::readFile(p, inFilePath) == limecell::fileops::SUCCESS)
     {
-        p.print(std::cout);
+        printPage(p, std::cout);
     }
     else
     {

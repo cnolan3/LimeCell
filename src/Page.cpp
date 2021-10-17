@@ -38,7 +38,7 @@ namespace limecell
 
         }
 
-        Page::statusCode Page::getDataAt(int col, int row, std::string& data)
+        Page::statusCode Page::getDataAt(UINT col, UINT row, std::string& data)
         {
             auto found = m_pageData.find(cell(col, row));
 
@@ -52,7 +52,7 @@ namespace limecell
             return statusCode::NOT_FOUND;
         }
 
-        Page::statusCode Page::setDataAt(int col, int row, std::string data)
+        Page::statusCode Page::setDataAt(UINT col, UINT row, std::string data)
         {
             cell tmp(col, row);
 
@@ -120,7 +120,7 @@ namespace limecell
             return -1;
         }
 
-        void Page::removeRow(int row)
+        void Page::removeRow(UINT row)
         {
             auto found = m_rows.find(maxPos(row));
 
@@ -135,7 +135,7 @@ namespace limecell
             }
         }
 
-        void Page::addRow(int row)
+        void Page::addRow(UINT row)
         {
             maxPos tmp(row);
 
@@ -151,7 +151,7 @@ namespace limecell
             }
         }
 
-        void Page::removeCol(int col)
+        void Page::removeCol(UINT col)
         {
             auto found = m_cols.find(maxPos(col));
 
@@ -166,7 +166,7 @@ namespace limecell
             }
         }
 
-        void Page::addCol(int col)
+        void Page::addCol(UINT col)
         {
             maxPos tmp(col);
 
@@ -182,13 +182,13 @@ namespace limecell
             }
         }
 
-        Page* Page::subPage(int startCol, int startRow, int numCols, int numRows)
+        Page* Page::subPage(UINT startCol, UINT startRow, UINT numCols, UINT numRows)
         {
             Page* ret = new Page;
 
-            for (int row = 0; row < numRows; row++)
+            for (UINT row = 0; row < numRows; row++)
             {
-                for (int col = 0; col < numCols; col++)
+                for (UINT col = 0; col < numCols; col++)
                 {
                     std::string data;
                     this->getDataAt(col + startCol, row + startRow, data);
@@ -197,25 +197,6 @@ namespace limecell
             }
 
             return ret;
-        }
-
-        void TestPage::print(std::ostream& stream)
-        {
-            for (int i = 0; i <= getMaxRow(); i++)
-            {
-                for (int j = 0; j <= getMaxCol(); j++)
-                {
-                    std::string data;
-                    if (getDataAt(j, i, data) == statusCode::NOT_FOUND)
-                    {
-                        data = "EMPTY";
-                    }
-
-                    stream << data << ", ";
-                }
-
-                stream << std::endl;
-            }
         }
     };
 };

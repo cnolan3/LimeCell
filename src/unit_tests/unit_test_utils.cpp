@@ -6,7 +6,7 @@
  */
 #include <boost/test/unit_test.hpp>
 
-#include "../utils.h"
+#include "../Utils.h"
 
 BOOST_AUTO_TEST_CASE(getArrayXY_single_row_success)
 {

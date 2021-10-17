@@ -11,9 +11,11 @@ TEST_OBJ = ${subst $(SRC_DIR), $(OBJ_DIR), $(TEST_SRC:.cpp=.o)}
 
 BOOST_ROOT := /usr/include/boost
 BOOST_REGEX := boost_regex
+BOOST_FS := boost_filesystem
+BOOST_DLL := boost_dll
 BOOST_UNIT_TEST := boost_unit_test_framework
 
-LDFLAGS = -L${BOOST_ROOT} -l${BOOST_REGEX}
+LDFLAGS = -L${BOOST_ROOT} -l${BOOST_REGEX} -l${BOOST_FS}
 CFLAGS = -g
 
 all: $(PROG)

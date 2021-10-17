@@ -28,7 +28,7 @@ namespace limecell
          * @param delim delimeter for the file
          * @return a fileops status code
          */
-        statusCode readFile(data::Page& page, std::string filePath, std::string delim = ",");
+        statusCode readFile(data::Page* page, std::string filePath, std::string delim = ",");
 
         /*! \brief write a page object to a file
          * 
@@ -37,6 +37,6 @@ namespace limecell
          * @param delim delimimeter for the file
          * @return a fileops status code
          */
-        statusCode writeFile(data::Page& page, std::string filePath, std::string delim = ",");
+        statusCode writeFile(data::Page* page, std::string filePath, std::string delim = ",");
     };
 };

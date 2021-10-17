@@ -8,8 +8,9 @@
 #include <string>
 
 #include "Page.h"
+#include "DataTypes.h"
 
-typedef unsigned int UINT;
+#pragma once
 
 namespace limecell
 {

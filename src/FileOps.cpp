@@ -11,7 +11,7 @@ namespace limecell
 {
     namespace fileops
     {
-        statusCode readFile(data::Page& page, std::string filePath, std::string delim)
+        statusCode readFile(data::Page* page, std::string filePath, std::string delim)
         {
             // modified from https://bravenewmethod.com/2016/09/17/quick-and-robust-c-csv-reader-with-boost/
             const boost::regex fieldsRegex(delim);
@@ -34,7 +34,7 @@ namespace limecell
                 {
                     std::string token = fields->str();
                     ++fields;
-                    page.setDataAt(col, row, token);
+                    page->setDataAt(col, row, token);
                     col++;
                 }
 
@@ -46,7 +46,7 @@ namespace limecell
             return statusCode::SUCCESS;
         }
 
-        statusCode writeFile(data::Page& page, std::string filePath, std::string delim)
+        statusCode writeFile(data::Page* page, std::string filePath, std::string delim)
         {
             std::ofstream outFile(filePath, std::ostream::trunc);
 
@@ -55,13 +55,13 @@ namespace limecell
                 return statusCode::FAIL;
             }
 
-            for (int row = 0; row <= page.getMaxRow(); row++)
+            for (int row = 0; row <= page->getMaxRow(); row++)
             {
                 std::string line;
-                for (int col = 0; col <= page.getMaxCol(); col++)
+                for (int col = 0; col <= page->getMaxCol(); col++)
                 {
                     std::string field;
-                    page.getDataAt(col, row, field);
+                    page->getDataAt(col, row, field);
                     line = line + field + delim;
                 }
 

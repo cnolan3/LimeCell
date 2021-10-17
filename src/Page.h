@@ -11,6 +11,8 @@
 #include <string>
 #include <ostream>
 
+#include "DataTypes.h"
+
 #pragma once
 
 namespace limecell
@@ -24,11 +26,11 @@ namespace limecell
         struct cell
         {
             //! column number
-            int col;
+            UINT col;
             //! row number
-            int row;
+            UINT row;
 
-            cell(int col, int row) { this->col = col; this->row = row; }
+            cell(UINT col, UINT row) { this->col = col; this->row = row; }
 
             bool operator==(const cell& c) const { return (this->col == c.col) && (this->row == c.row); }
         };
@@ -52,11 +54,11 @@ namespace limecell
         struct maxPos
         {
             //! row or column number
-            int position;
+            UINT position;
             //! quantity of cells in that row or column
-            int* quantity;
+            UINT* quantity;
 
-            maxPos(int position) { this->position = position; this->quantity = new int(1); }
+            maxPos(UINT position) { this->position = position; this->quantity = new UINT(1); }
 
             bool operator==(const maxPos& m) const { return this->position == m.position; }
             bool operator<(const maxPos& m) const { return this->position < m.position; }
@@ -96,7 +98,7 @@ namespace limecell
              * @param data reference to data string
              * @return status code
              */
-            statusCode getDataAt(int col, int row, std::string& data); 
+            statusCode getDataAt(UINT col, UINT row, std::string& data); 
 
             /*! \brief set the data at a specified cell location.
              * 
@@ -118,9 +120,12 @@ namespace limecell
              * @param data cell input data
              * @return status code
              */
-            statusCode setDataAt(int col, int row, std::string data); 
+            statusCode setDataAt(UINT col, UINT row, std::string data); 
 
             /*! \brief gets the current highest column number used in the page.
+             *
+             * Returns the index of the highest column in the page, returns -1 if
+             * there are now columns in the page.
              * 
              * constant time, O(n).
              * 
@@ -128,7 +133,10 @@ namespace limecell
              */
             int getMaxCol();
 
-            /*! \brief gets the current highest row number used in the page
+            /*! \brief gets the current highest row number used in the page.
+             *
+             * Returns the index of the highest row in the page, returns -1 if
+             * there are no rows in the page.
              * 
              * constant time O(n).
              * 
@@ -144,7 +152,7 @@ namespace limecell
              * @param numRows number of rows to include
              * @return sub page
              */
-            Page* subPage(int startCol, int startRow, int numCols, int numRows);
+            Page* subPage(UINT startCol, UINT startRow, UINT numCols, UINT numRows);
 
         private: 
 
@@ -158,7 +166,7 @@ namespace limecell
              * 
              * @param row row number
              */
-            void removeRow(int row);
+            void removeRow(UINT row);
 
             /*! \brief increment the quantity of cells in a row.
              * 
@@ -169,7 +177,7 @@ namespace limecell
              * 
              * @param row row number
              */
-            void addRow(int row);
+            void addRow(UINT row);
 
             /*! \brief decrements quantity of cells in a column. 
              * 
@@ -181,7 +189,7 @@ namespace limecell
              * 
              * @param col column number
              */
-            void removeCol(int col);
+            void removeCol(UINT col);
 
             /*! \brief increment the quantity of cells in a column.
              *  
@@ -192,7 +200,7 @@ namespace limecell
              * 
              * @param col column number
              */
-            void addCol(int col);
+            void addCol(UINT col);
 
             //! page data
             sheet m_pageData;
@@ -201,22 +209,6 @@ namespace limecell
             posList m_cols;
             //! list of used rows
             posList m_rows;
-        };
-
-        class TestPage : Page
-        {
-        public:
-            TestPage();
-            ~TestPage() = default;
-
-            /*! \brief print the page to the stream (only for debug purposes)
-             * 
-             * @param stream stream to print to
-             */
-            void print(std::ostream& stream);
-
-        private:
-
         };
     };
 };
