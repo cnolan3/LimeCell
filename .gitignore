@@ -37,3 +37,6 @@ latex/
 bin/
 limecell
 unit_test
+
+*.txt
+!src/unit_test/mock_data/*.txt
