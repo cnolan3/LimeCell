@@ -6,8 +6,18 @@
  */
 #include <boost/test/unit_test.hpp>
 #include <boost/filesystem.hpp>
+#include <fstream>
 
 #include "../FileOps.h"
+
+boost::filesystem::path getMockDataPath(std::string mockFile)
+{
+    boost::filesystem::path dataPath = boost::filesystem::canonical(boost::filesystem::current_path());
+
+    dataPath += boost::filesystem::path("/src/unit_tests/mock_data/" + mockFile);
+
+    return dataPath;
+}
 
 BOOST_AUTO_TEST_CASE(readFile_read_data_success)
 {
@@ -15,9 +25,7 @@ BOOST_AUTO_TEST_CASE(readFile_read_data_success)
     int dataHeight = 3;
     std::string expectedData[9] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-    boost::filesystem::path dataPath = boost::filesystem::canonical(boost::filesystem::current_path());
-
-    dataPath += boost::filesystem::path("/src/unit_tests/mock_data/test_data_1.txt");
+    boost::filesystem::path dataPath = getMockDataPath("test_data_1.txt");
 
     limecell::data::Page* p = new limecell::data::Page();
 
@@ -37,4 +45,41 @@ BOOST_AUTO_TEST_CASE(readFile_read_data_success)
 
             BOOST_CHECK_EQUAL(expected, actual);        }
     }
+}
+
+BOOST_AUTO_TEST_CASE(writeFile_success)
+{
+    limecell::data::Page* p = new limecell::data::Page();
+
+    p->setDataAt(0, 0, "1");
+    p->setDataAt(1, 0, "2");
+    p->setDataAt(2, 0, "3");
+    p->setDataAt(0, 1, "4");
+    p->setDataAt(1, 1, "5");
+    p->setDataAt(2, 1, "6");
+    p->setDataAt(0, 2, "7");
+    p->setDataAt(1, 2, "8");
+    p->setDataAt(2, 2, "9");
+
+    boost::filesystem::path tmpDataPath = getMockDataPath("tmp_page_out.txt");
+    boost::filesystem::path mockDataPath = getMockDataPath("test_data_1.txt");
+
+    limecell::fileops::writeFile(p, tmpDataPath.string());
+
+    BOOST_REQUIRE(boost::filesystem::exists(tmpDataPath.string()));
+
+    std::ifstream tmpFile(tmpDataPath.string());
+    std::ifstream mockFile(mockDataPath.string());
+
+    std::string tmpLine;
+    std::string mockLine;
+    while(std::getline(tmpFile, tmpLine) && std::getline(mockFile, mockLine))
+    {
+        BOOST_CHECK_EQUAL(tmpLine, mockLine);
+    }
+
+    tmpFile.close();
+    mockFile.close();
+
+    boost::filesystem::remove(tmpDataPath);
 }
