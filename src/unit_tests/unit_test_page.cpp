@@ -10,6 +10,8 @@
 
 using namespace limecell;
 
+BOOST_AUTO_TEST_SUITE(page_test_suite)
+
 BOOST_AUTO_TEST_CASE(cell_data_added)
 {
     data::Page p;
@@ -292,3 +294,72 @@ BOOST_AUTO_TEST_CASE(get_subset)
     p2->getDataAt(4, 4, data);
     BOOST_CHECK(data == "");
 }
+
+BOOST_AUTO_TEST_CASE(copy_constructor)
+{
+    data::Page p1;
+
+    p1.setDataAt(0, 0, "first");
+    p1.setDataAt(1, 1, "second");
+    p1.setDataAt(3, 1, "third");
+    p1.setDataAt(4, 4, "fourth");
+
+    data::Page p2 = p1;
+
+    std::string data;
+    p2.getDataAt(0, 0, data);
+    BOOST_CHECK_EQUAL(data, "first");
+
+    p2.getDataAt(1, 1, data);
+    BOOST_CHECK_EQUAL(data, "second");
+
+    p2.getDataAt(3, 1, data);
+    BOOST_CHECK_EQUAL(data, "third");
+
+    p2.getDataAt(3, 3, data);
+    BOOST_CHECK_EQUAL(data, "");
+
+    p2.getDataAt(4, 4, data);
+    BOOST_CHECK_EQUAL(data, "fourth");
+}
+
+BOOST_AUTO_TEST_CASE(assignment_operator)
+{
+    data::Page p1;
+
+    p1.setDataAt(0, 0, "first");
+    p1.setDataAt(1, 1, "second");
+    p1.setDataAt(3, 1, "third");
+    p1.setDataAt(4, 4, "fourth");
+
+    data::Page p2;
+
+    p2.setDataAt(0, 0, "1");
+    p2.setDataAt(1, 1, "2");
+    p2.setDataAt(5, 5, "3");
+    p2.setDataAt(2, 4, "4");
+
+    p2 = p1;
+
+    std::string data;
+    p2.getDataAt(0, 0, data);
+    BOOST_CHECK_EQUAL(data, "first");
+
+    p2.getDataAt(1, 1, data);
+    BOOST_CHECK_EQUAL(data, "second");
+
+    p2.getDataAt(3, 1, data);
+    BOOST_CHECK_EQUAL(data, "third");
+
+    p2.getDataAt(5, 5, data);
+    BOOST_CHECK_EQUAL(data, "");
+
+    p2.getDataAt(2, 4, data);
+    BOOST_CHECK_EQUAL(data, "");
+
+    p2.getDataAt(4, 4, data);
+    BOOST_CHECK_EQUAL(data, "fourth");
+}
+
+
+BOOST_AUTO_TEST_SUITE_END()

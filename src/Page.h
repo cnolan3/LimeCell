@@ -72,7 +72,13 @@ namespace limecell
         {
         public:
 
+            /*! \brief constructs a Page object */
             Page();
+
+            /*! \brief Page copy constructor */
+            Page(const Page& p);
+
+            /*! \brief Page descrutor */
             ~Page() = default;
 
             /*! \brief enum of page class status codes */
@@ -153,6 +159,12 @@ namespace limecell
              * @return sub page
              */
             Page* subPage(UINT startCol, UINT startRow, UINT numCols, UINT numRows);
+
+            /*! \brief assignment operator
+             *
+             * @param p page to copy from
+             */
+            void operator=(const Page& p);
 
         private: 
 

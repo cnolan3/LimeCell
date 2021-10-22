@@ -6,6 +6,7 @@
 #include "Page.h"
 
 #include <algorithm>
+#include <cstring>
 
 /**
  * NOTE: many of the function comments in the header file mention "currently use rows"
@@ -36,6 +37,13 @@ namespace limecell
         Page::Page()
         {
 
+        }
+
+        Page::Page(const Page& p)
+        {
+            m_pageData = p.m_pageData;
+            m_cols = p.m_cols;
+            m_rows = p.m_rows;
         }
 
         Page::statusCode Page::getDataAt(UINT col, UINT row, std::string& data)
@@ -197,6 +205,13 @@ namespace limecell
             }
 
             return ret;
+        }
+
+        void Page::operator=(const Page& p)
+        {
+            m_pageData = p.m_pageData;
+            m_cols = p.m_cols;
+            m_rows = p.m_rows;
         }
     };
 };

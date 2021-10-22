@@ -8,6 +8,8 @@
 
 #include "../Utils.h"
 
+BOOST_AUTO_TEST_SUITE(utils_test_suite)
+
 BOOST_AUTO_TEST_CASE(getArrayXY_single_row_success)
 {
     int* arr = new int[5]{ 0, 1, 2, 3, 4 };
@@ -38,3 +40,5 @@ BOOST_AUTO_TEST_CASE(getArrayXY_out_of_bounds_exception)
     // position (6, 0) is outside of the array
     BOOST_CHECK_THROW(getArrayXY<int>(arr, 5, 6, 0, 5), std::out_of_range);
 }
+
+BOOST_AUTO_TEST_SUITE_END()

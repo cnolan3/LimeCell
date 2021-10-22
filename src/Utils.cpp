@@ -1,3 +1,8 @@
+/**
+ * @file Utils.cpp
+ * 
+ * @author Connor Nolan
+ */
 #include "Utils.h"
 
 #include <stdexcept>

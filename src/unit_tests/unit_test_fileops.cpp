@@ -10,14 +10,18 @@
 
 #include "../FileOps.h"
 
-boost::filesystem::path getMockDataPath(std::string mockFile)
+bool getMockDataPath(std::string mockFile, boost::filesystem::path& dataPath)
 {
-    boost::filesystem::path dataPath = boost::filesystem::canonical(boost::filesystem::current_path());
+    const std::string fullMockPath = "/src/unit_tests/mock_data/" + mockFile;
 
-    dataPath += boost::filesystem::path("/src/unit_tests/mock_data/" + mockFile);
+    dataPath = boost::filesystem::canonical(boost::filesystem::current_path());
 
-    return dataPath;
+    dataPath += boost::filesystem::path(fullMockPath);
+
+    return boost::filesystem::exists(dataPath);
 }
+
+BOOST_AUTO_TEST_SUITE(fileops_test_suite)
 
 BOOST_AUTO_TEST_CASE(readFile_read_data_success)
 {
@@ -25,7 +29,9 @@ BOOST_AUTO_TEST_CASE(readFile_read_data_success)
     int dataHeight = 3;
     std::string expectedData[9] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-    boost::filesystem::path dataPath = getMockDataPath("test_data_1.txt");
+    boost::filesystem::path dataPath;
+    
+    BOOST_REQUIRE(getMockDataPath("test_data_1.txt", dataPath));
 
     limecell::data::Page* p = new limecell::data::Page();
 
@@ -43,7 +49,8 @@ BOOST_AUTO_TEST_CASE(readFile_read_data_success)
             std::string actual;
             p->getDataAt(x, y, actual);
 
-            BOOST_CHECK_EQUAL(expected, actual);        }
+            BOOST_CHECK_EQUAL(expected, actual);
+        }
     }
 }
 
@@ -61,8 +68,11 @@ BOOST_AUTO_TEST_CASE(writeFile_success)
     p->setDataAt(1, 2, "8");
     p->setDataAt(2, 2, "9");
 
-    boost::filesystem::path tmpDataPath = getMockDataPath("tmp_page_out.txt");
-    boost::filesystem::path mockDataPath = getMockDataPath("test_data_1.txt");
+    boost::filesystem::path tmpDataPath;
+    getMockDataPath("tmp_page_out.txt", tmpDataPath);
+
+    boost::filesystem::path mockDataPath;
+    BOOST_REQUIRE(getMockDataPath("test_data_1.txt", mockDataPath));
 
     limecell::fileops::writeFile(p, tmpDataPath.string());
 
@@ -83,3 +93,5 @@ BOOST_AUTO_TEST_CASE(writeFile_success)
 
     boost::filesystem::remove(tmpDataPath);
 }
+
+BOOST_AUTO_TEST_SUITE_END()
