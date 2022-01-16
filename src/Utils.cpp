@@ -44,3 +44,45 @@ void printPage(limecell::data::Page* p, std::ostream& stream)
         stream << std::endl;
     }
 }
+
+std::string centerJustify(std::string str, UINT lineCharWidth)
+{
+    UINT spaceRemaining = lineCharWidth - str.size();
+
+    if (spaceRemaining < 0)
+    {
+        spaceRemaining = 0;
+        str = str.substr(0, lineCharWidth);
+    }
+
+    UINT backPadSpace = spaceRemaining / 2;
+    UINT frontPadSpace = spaceRemaining - backPadSpace;
+
+    return (std::string(frontPadSpace, ' ') + str + std::string(backPadSpace, ' '));
+}
+
+std::string leftJustify(std::string str, UINT lineCharWidth)
+{
+    UINT spaceRemaining = lineCharWidth - str.size();
+
+    if (spaceRemaining < 0)
+    {
+        spaceRemaining = 0;
+        str = str.substr(0, lineCharWidth);
+    }
+
+    return (str + std::string(spaceRemaining, ' '));
+}
+
+std::string rightJustify(std::string str, UINT lineCharWidth)
+{
+    UINT spaceRemaining = lineCharWidth - str.size();
+
+    if (spaceRemaining < 0)
+    {
+        spaceRemaining = 0;
+        str = str.substr(0, lineCharWidth);
+    }
+
+    return (std::string(spaceRemaining, ' ') + str);
+}

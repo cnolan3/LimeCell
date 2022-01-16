@@ -30,3 +30,42 @@ extern T getArrayXY(T* array, UINT size, UINT x, UINT y, UINT width);
  * @param stream reference to the stream to print to
  */
 void printPage(limecell::data::Page* p, std::ostream& stream);
+
+/*! \brief create a center justified string.
+ *
+ * Center justify string str by padding each side with whitespace
+ * according to the column width given. If the input string is
+ * larger than the line width, will cut off the excess from the
+ * end of the string.
+ * 
+ * @param str string to justify
+ * @param lineCharWidth character width of the column
+ * @return center justified string
+ */
+std::string centerJustify(std::string str, UINT lineCharWidth);
+
+/*! \brief create a left justified string.
+ *
+ * Left justify string str by padding each side with whitespace
+ * according to the lineumn width given. If the input string is
+ * larger than the line width, will cut off the excess from the
+ * end of the string.
+ * 
+ * @param str string to justify
+ * @param lineCharWidth character width of the lineumn
+ * @return left justified string
+ */
+std::string leftJustify(std::string str, UINT lineCharWidth);
+
+/*! \brief create a right justified string.
+ *
+ * Right justify string str by padding each side with whitespace
+ * according to the lineumn width given. If the input string is
+ * larger than the line width, will cut off the excess from the
+ * end of the string.
+ * 
+ * @param str string to justify
+ * @param lineCharWidth character width of the lineumn
+ * @return right justified string
+ */
+std::string rightJustify(std::string str, UINT lineCharWidth);

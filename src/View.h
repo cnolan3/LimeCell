@@ -19,10 +19,10 @@ namespace limecell
         class View
         {
         public:
+            /*! \brief constructs a view object */
             View();
 
-            View(UINT maxCharWidth, UINT maxCharHeight, UINT minColCharWidth);
-
+            /*! \brief destructs the view object */
             ~View();
 
             /*! \brief redraw the view to the screen */
@@ -40,11 +40,18 @@ namespace limecell
 
             /*! \brief update the displayed data
              *
+             * Will update the selected layer with the data in newData,
+             * will copy the data directly into the layer if the layer
+             * already exists, and will create a new layer with this data
+             * if it does not already exist. Also updates the number ID of
+             * the leftmost column and topmost row.
+             *
+             * @param layer layer number to insert data into
              * @param newFirstCol set the first column number to this value
              * @param newFirstRow set the first row number to this value
              * @param newData new page subset to display
              */
-            virtual void updateData(UINT newFirstCol, UINT newFirstRow, data::Page* newData);
+            virtual void updateData(UINT layer, UINT newFirstCol, UINT newFirstRow, data::Page* newData);
 
             /*! \brief get the number of columns
              * 
@@ -60,30 +67,45 @@ namespace limecell
 
         protected:
             //! max width of the view in characters
-            UINT maxCharWidth;
+            UINT m_maxCharWidth;
             //! max height of the view in characters
-            UINT maxCharHeight;
+            UINT m_maxCharHeight;
+            //! minimum width of columns in characters
+            UINT m_minColCharWidth;
 
             //! number of columns in current view
-            UINT numCols;
+            UINT m_numCols;
             //! number of row in current view
-            UINT numRows;
+            UINT m_numRows;
 
             //! current first column
-            UINT firstCol;
+            UINT m_firstCol;
             //! current first row
-            UINT firstRow;
+            UINT m_firstRow;
 
             //! currently selected column
-            UINT selectedCol;
+            UINT m_selectedCol;
             //! currently selected row
-            UINT selectedRow;
+            UINT m_selectedRow;
 
             //! array of column character widths
-            UINT* colCharWidths;
+            UINT* m_colCharWidths;
 
-            //! array of current cell data
-            std::string* viewData;
+            //! vector of view data layers
+            /*!
+             * Vector of data layers that will be printed
+             * to the screen. Every layer has the same height
+             * and width, and the view should provide some
+             * method of switching between which layer is
+             * being displayed.
+             * NOTE: View layers are not currently very
+             * useful, but in the future will be used to
+             * facilitate Excel style functions and other
+             * advanced features by putting function data
+             * into the base data and interpreting that data
+             * in another layer.
+             */
+            std::vector<limecell::data::Page*> m_layers;
         };
     };
 };
