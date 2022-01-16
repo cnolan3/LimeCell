@@ -52,6 +52,9 @@ namespace limecell
 
             /*! \brief print the view to the command line. */
             void printView();
+
+            /*! \brief print help info. */
+            void printHelp();
         };
     };
 };

@@ -63,6 +63,10 @@ namespace limecell
                 ret.push_back(controller::cmdcodes::EXIT);
                 std::cout << "Goodbye!" << std::endl;
             }
+            else if (input == "help" || input == "h")
+            {
+                printHelp();
+            }
             else
             {
                 std::cout << "Invalid input" << std::endl;
@@ -112,6 +116,13 @@ namespace limecell
                 
                 std::cout << std::endl;
             }
+        }
+
+        void CLIView::printHelp()
+        {
+            std::cout << "print | p : Print the contents of the currently open file." << std::endl;
+            std::cout << "quit | q | exit | end : Exit limecell." << std::endl;
+            std::cout << "help | h : Show help info (but you already knew that)." << std::endl;
         }
     };
 };
