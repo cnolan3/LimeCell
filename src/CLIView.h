@@ -43,7 +43,7 @@ namespace limecell
              * 
              * @return vector of strings
              */
-            std::vector<std::string> getCommand();
+            controller::cmd::Command* getCommand();
 
         protected:
 

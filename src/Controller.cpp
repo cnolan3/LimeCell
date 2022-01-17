@@ -8,6 +8,7 @@
 
 #include "Controller.h"
 #include "ControllerCodes.h"
+#include "ControllerCmds.h"
 #include "Page.h"
 #include "FileOps.h"
 #include "View.h"
@@ -37,14 +38,14 @@ namespace limecell
             view->updateData(0, 0, 0, page);
             view->refresh();
 
-            std::vector<std::string> cmdResponse;
             while(1)
             {
-                cmdResponse = view->getCommand();
+                cmd::Command* cmdResponse = view->getCommand();
 
-                if (cmdResponse.size() == 1 && cmdResponse[0] == cmdcodes::EXIT)
+                if (cmdResponse != nullptr)
                 {
-                    break;
+                    if (cmdResponse->run(page))
+                        break;
                 }
             }
 

@@ -9,6 +9,7 @@
 
 #include "Page.h"
 #include "DataTypes.h"
+#include "ControllerCmds.h"
 
 #pragma once
 
@@ -36,7 +37,7 @@ namespace limecell
              * 
              * @return vector of strings
              */
-            virtual std::vector<std::string> getCommand() = 0;
+            virtual controller::cmd::Command* getCommand() = 0;
 
             /*! \brief update the displayed data
              *

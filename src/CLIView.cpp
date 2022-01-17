@@ -44,9 +44,9 @@ namespace limecell
 
         }
 
-        std::vector<std::string> CLIView::getCommand()
+        controller::cmd::Command* CLIView::getCommand()
         {
-            std::vector<std::string> ret;
+            controller::cmd::Command* ret = nullptr;
 
             std::cout << "limecell > ";
 
@@ -60,7 +60,7 @@ namespace limecell
             }
             else if (input == "exit" || input == "end" || input == "quit" || input == "q")
             {
-                ret.push_back(controller::cmdcodes::EXIT);
+                ret = new controller::cmd::Exit();
                 std::cout << "Goodbye!" << std::endl;
             }
             else if (input == "help" || input == "h")
