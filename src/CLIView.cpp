@@ -9,10 +9,12 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include "CLIView.h"
 #include "Utils.h"
-#include "ControllerCodes.h"
+#include "ControllerCmds.h"
 
 namespace limecell
 {
@@ -46,33 +48,63 @@ namespace limecell
 
         controller::cmd::Command* CLIView::getCommand()
         {
-            controller::cmd::Command* ret = nullptr;
-
             std::cout << "limecell > ";
 
             std::string input;
-            std::cin >> input;
+            std::getline(std::cin, input);
+            std::cin.clear();
 
-            if (input == "print" || input == "p")
+            std::vector<std::string> cmdVect;
+            boost::algorithm::split(cmdVect, input, boost::is_any_of(" "));
+
+            if (cmdVect.size() == 1)
             {
-                setViewSizes();
-                printView();
+                if (cmdVect[0] == "print" || cmdVect[0] == "p")
+                {
+                    setViewSizes();
+                    printView();
+                    return nullptr;
+                }
+                else if (cmdVect[0] == "exit" || cmdVect[0] == "end" || cmdVect[0] == "quit" || cmdVect[0] == "q")
+                {
+                    std::cout << "Goodbye!" << std::endl;
+                    return new controller::cmd::Exit(); 
+                }
+                else if (cmdVect[0] == "help" || cmdVect[0] == "h")
+                {
+                    printHelp();
+                    return nullptr;
+                }
+                else if (cmdVect[0] == "close")
+                {
+                    return new controller::cmd::CloseFile();
+//                    std::cout << "Are you sure? all your hard unsaved work will be lost." << std::endl;
+//                    std::string sure;
+//                    std::cin >> sure;
+//                    std::cin.clear();
+//
+//                    if (sure == "yes" || sure == "YES" || sure == "y" || sure == "Y")
+//                    {
+//                        return new controller::cmd::CloseFile();
+//                    }
+//                    else
+//                    {
+//                        std::cout << "Good choice" << std::endl;
+//                        return nullptr;
+//                    }
+                }
             }
-            else if (input == "exit" || input == "end" || input == "quit" || input == "q")
+            else if (cmdVect.size() == 2)
             {
-                ret = new controller::cmd::Exit();
-                std::cout << "Goodbye!" << std::endl;
-            }
-            else if (input == "help" || input == "h")
-            {
-                printHelp();
-            }
-            else
-            {
-                std::cout << "Invalid input" << std::endl;
+                if (cmdVect[0] == "open")
+                {
+                    return new controller::cmd::OpenFile(cmdVect[1]);
+                }
             }
 
-            return ret;
+            std::cout << "Invalid input" << std::endl;
+
+            return nullptr;
         }
 
         void CLIView::setViewSizes()

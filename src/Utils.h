@@ -5,7 +5,8 @@
  * @author Connor Nolan
  */
 
-#pragma once
+#ifndef __UTILS_H__
+#define __UTILS_H__
 
 #include <ostream>
 
@@ -69,3 +70,5 @@ std::string leftJustify(std::string str, UINT lineCharWidth);
  * @return right justified string
  */
 std::string rightJustify(std::string str, UINT lineCharWidth);
+
+#endif

@@ -3,12 +3,14 @@
  *
  * @author Connor Nolan
  */
+
+#ifndef __FILEOPS_H__
+#define __FILEOPS_H__
+
 #include <fstream>
 #include <string>
 
 #include "Page.h"
-
-#pragma once
 
 namespace limecell
 {
@@ -40,3 +42,5 @@ namespace limecell
         statusCode writeFile(data::Page* page, std::string filePath, std::string delim = ",");
     };
 };
+
+#endif

@@ -7,7 +7,6 @@
 #include <iostream>
 
 #include "Controller.h"
-#include "ControllerCodes.h"
 #include "ControllerCmds.h"
 #include "Page.h"
 #include "FileOps.h"
@@ -44,7 +43,7 @@ namespace limecell
 
                 if (cmdResponse != nullptr)
                 {
-                    if (cmdResponse->run(page))
+                    if (cmdResponse->run(page, view))
                         break;
                 }
             }

@@ -5,6 +5,9 @@
  * @author Connor Nolan
  */
 
-#pragma once
+#ifndef __DATATYPES_H__
+#define __DATATYPES_H__
 
 typedef unsigned int UINT;
+
+#endif

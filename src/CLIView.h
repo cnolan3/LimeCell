@@ -5,13 +5,14 @@
  * @author Connor Nolan
  */
 
+#ifndef __CLIVIEW_H__
+#define __CLIVIEW_H__
+
 #include <string>
 
 #include "Page.h"
 #include "DataTypes.h"
 #include "View.h"
-
-#pragma once
 
 namespace limecell
 {
@@ -58,3 +59,5 @@ namespace limecell
         };
     };
 };
+
+#endif

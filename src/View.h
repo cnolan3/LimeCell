@@ -5,16 +5,25 @@
  * @author Connor Nolan
  */
 
+#ifndef __VIEW_H__
+#define __VIEW_H__
+
 #include <string>
 
 #include "Page.h"
 #include "DataTypes.h"
-#include "ControllerCmds.h"
-
-#pragma once
 
 namespace limecell
 {
+    // forward declare the command class
+    namespace controller
+    {
+        namespace cmd
+        {
+            class Command;
+        };
+    };
+
     namespace view
     {
         class View
@@ -110,3 +119,5 @@ namespace limecell
         };
     };
 };
+
+#endif

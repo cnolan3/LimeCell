@@ -5,6 +5,9 @@
  * @author Connor Nolan
  */
 
+#ifndef __PAGE_H__
+#define __PAGE_H__
+
 #include <vector>
 #include <unordered_map>
 #include <set>
@@ -12,8 +15,6 @@
 #include <ostream>
 
 #include "DataTypes.h"
-
-#pragma once
 
 namespace limecell
 {
@@ -224,3 +225,5 @@ namespace limecell
         };
     };
 };
+
+#endif

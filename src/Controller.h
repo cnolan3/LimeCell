@@ -5,11 +5,12 @@
  * @author Connor Nolan
  */
 
+#ifndef __CONTROLLER_H__
+#define __CONTROLLER_H__
+
 #include <string>
 
 #include "DataTypes.h"
-
-#pragma once
 
 namespace limecell
 {
@@ -30,3 +31,5 @@ namespace limecell
         UINT runController();
     };
 };
+
+#endif
