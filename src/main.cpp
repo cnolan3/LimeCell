@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ncurses.h>
+//#include <ncurses.h>
 
 #include "Controller.h"
 

@@ -54,6 +54,9 @@ namespace limecell
                 OpenFile(std::string filePath);
 
                 UINT run(data::Page* data, view::View* view);
+            
+            private:
+                std::string m_filePath;
             };
 
             class CloseFile : public Command
@@ -62,6 +65,20 @@ namespace limecell
                 CloseFile();
 
                 UINT run(data::Page* data, view::View* view);
+            };
+
+            class SetCell : public Command
+            {
+            public:
+                SetCell(UINT layer, UINT col, UINT row, std::string cellData);
+
+                UINT run(data::Page* data, view::View* view);
+
+            private:
+                UINT m_layer;
+                UINT m_col;
+                UINT m_row;
+                std::string m_cellData;
             };
 
         };

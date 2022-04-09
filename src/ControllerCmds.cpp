@@ -25,7 +25,7 @@ namespace limecell
                 
             }
 
-            Exit::Exit() : Command()
+            Exit::Exit()
             {
 
             }
@@ -35,20 +35,19 @@ namespace limecell
                 return 1;
             }
 
-            OpenFile::OpenFile(std::string filePath) : Command()
+            OpenFile::OpenFile(std::string filePath) :
+                m_filePath(filePath)
             {
-                this->args.push_back(filePath);
+
             }
 
             UINT OpenFile::run(data::Page* data, view::View* view)
             {
-                std::string filePath = this->args[0];
-
-                fileops::statusCode fileStat = fileops::readFile(data, filePath);
+                fileops::statusCode fileStat = fileops::readFile(data, m_filePath);
 
                 if (fileStat == fileops::FAIL)
                 {
-                    std::cout << "open file command failed." << std::endl;
+                    std::cerr << "open file command failed." << std::endl;
                     return 0;
                 }
 
@@ -58,7 +57,7 @@ namespace limecell
                 return 0;
             }
 
-            CloseFile::CloseFile() : Command()
+            CloseFile::CloseFile()
             {
 
             }
@@ -69,6 +68,22 @@ namespace limecell
                 data = new data::Page;
 
                 view->updateData(0, 0, 0, data);
+                view->refresh();
+
+                return 0;
+            }
+
+            SetCell::SetCell(UINT layer, UINT col, UINT row, std::string cellData) :
+                m_layer(layer), m_col(col), m_row(row), m_cellData(cellData)
+            {
+
+            }
+
+            UINT SetCell::run(data::Page* data, view::View* view)
+            {
+                data::Page::statusCode dataStat = data->setDataAt(m_col, m_row, m_cellData);
+
+                view->updateData(m_layer, data);
                 view->refresh();
 
                 return 0;

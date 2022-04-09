@@ -101,6 +101,13 @@ namespace limecell
                     return new controller::cmd::OpenFile(cmdVect[1]);
                 }
             }
+            else if (cmdVect.size() == 4)
+            {
+                if (cmdVect[0] == "set")
+                {
+                    return new controller::cmd::SetCell(0, std::stoi(cmdVect[1]), std::stoi(cmdVect[2]), cmdVect[3]);
+                }
+            }
 
             std::cout << "Invalid input" << std::endl;
 

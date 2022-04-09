@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(readFile_read_data_success)
 
     boost::filesystem::path dataPath;
     
-    BOOST_REQUIRE(getMockDataPath("test_data_1.txt", dataPath));
+    BOOST_REQUIRE(getMockDataPath("test_data_1.csv", dataPath));
 
     limecell::data::Page* p = new limecell::data::Page();
 
@@ -69,10 +69,10 @@ BOOST_AUTO_TEST_CASE(writeFile_success)
     p->setDataAt(2, 2, "9");
 
     boost::filesystem::path tmpDataPath;
-    getMockDataPath("tmp_page_out.txt", tmpDataPath);
+    getMockDataPath("tmp_page_out.csv", tmpDataPath);
 
     boost::filesystem::path mockDataPath;
-    BOOST_REQUIRE(getMockDataPath("test_data_1.txt", mockDataPath));
+    BOOST_REQUIRE(getMockDataPath("test_data_1.csv", mockDataPath));
 
     limecell::fileops::writeFile(p, tmpDataPath.string());
 

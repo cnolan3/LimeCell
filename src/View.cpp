@@ -36,6 +36,11 @@ namespace limecell
             }
         }
 
+        void View::updateData(UINT layer, data::Page* newData)
+        {
+            return View::updateData(layer, m_firstCol, m_firstRow, newData);
+        }
+
         UINT View::getNumCols()
         {
             return m_numCols;

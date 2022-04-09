@@ -63,6 +63,13 @@ namespace limecell
              */
             virtual void updateData(UINT layer, UINT newFirstCol, UINT newFirstRow, data::Page* newData);
 
+            /*! \brief update the displayed data without changing cell locations
+             *
+             * @param layer layer number to insert data into
+             * @param newData new page subset to display
+             */
+            virtual void updateData(UINT layer, data::Page* newData);
+
             /*! \brief get the number of columns
              * 
              * @return number of columns

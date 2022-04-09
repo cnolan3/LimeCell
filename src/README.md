@@ -21,10 +21,11 @@
 - **view.cpp/view.h**
 
     Base class for the view structure. Defines data and functions common to
-    all view types (cli, ncurses, etc.)
-    
-- **CLIView.cpp/CLIView.h**
+    all view types (cli, ncurses, etc.). Each subclass of View must define its
+    own method of taking input from the user and displaying the data given to
+    it by the controller.
 
+- **CLIView.cpp/CLIView.h**
     Defines the behavior of the CLI view, runs a custom interactive terminal
     interface to take commands, and prints the output of those commands to
     the terminal.
