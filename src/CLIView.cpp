@@ -162,6 +162,9 @@ namespace limecell
             std::cout << "print | p : Print the contents of the currently open file." << std::endl;
             std::cout << "quit | q | exit | end : Exit limecell." << std::endl;
             std::cout << "help | h : Show help info (but you already knew that)." << std::endl;
+            std::cout << "open <filepath> : opens file at <filepath>." << std::endl;
+            std::cout << "close : closes the currently open file without saving changes." << std::endl;
+            std::cout << "set <colnum> <rownum> <data> : sets the data in the cell at (<colnum>, <rownum>) to <data>." << std::endl;
         }
     };
 };
