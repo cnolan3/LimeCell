@@ -89,6 +89,21 @@ namespace limecell
                 return 0;
             }
 
+            ClearCell::ClearCell(UINT layer, UINT col, UINT row) :
+                m_layer(layer), m_col(col), m_row(row)
+            {
+
+            }
+
+            UINT ClearCell::run(data::Page* data, view::View* view)
+            {
+                data::Page::statusCode dataStat = data->setDataAt(m_col, m_row, "");
+
+                view->updateData(m_layer, data);
+                view->refresh();
+
+                return 0;
+            }
         };
     };
 };

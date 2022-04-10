@@ -174,6 +174,27 @@ namespace limecell
                 std::string m_cellData;
             };
 
+            /*! \brief command to clear the data of a single cell. */
+            class ClearCell : public Command
+            {
+            public:
+                /*! \brief constructor
+                 *
+                 * @param layer layer of cell to clear
+                 * @param col column of cell to clear
+                 * @param row row of cell to clear
+                 */
+                ClearCell(UINT layer, UINT col, UINT row);
+
+                UINT run(data::Page* data, view::View* view);
+            private:
+                //! layer of cell
+                UINT m_layer;
+                //! column of cell
+                UINT m_col;
+                //! row of cell
+                UINT m_row;
+            };
         };
     };
 };

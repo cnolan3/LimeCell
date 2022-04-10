@@ -101,6 +101,13 @@ namespace limecell
                     return new controller::cmd::OpenFile(cmdVect[1]);
                 }
             }
+            else if (cmdVect.size() == 3)
+            {
+                if (cmdVect[0] == "clear")
+                {
+                    return new controller::cmd::ClearCell(0, std::stoi(cmdVect[1]), std::stoi(cmdVect[2]));
+                }
+            }
             else if (cmdVect.size() == 4)
             {
                 if (cmdVect[0] == "set")
